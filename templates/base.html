@@ -1,0 +1,102 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Vira Lata Vira Vida{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="min-h-screen flex flex-col antialiased">
+
+    <header class="bg-[#1b4332] text-white shadow-lg sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5
+                    flex flex-wrap items-center justify-between gap-3">
+
+            <a href="{% url 'inicio' %}"
+               class="flex items-center gap-3 accessible-focus rounded-lg"
+               aria-label="Vira Lata Vira Vida - Página inicial">
+
+                <div class="bg-white/10 p-2 rounded-lg">
+                    <span class="text-2xl" aria-hidden="true">🐾</span>
+                </div>
+
+                <div>
+                    <p class="text-xs text-[#d8f3dc]">
+                        Vira Lata Vira Vida
+                    </p>
+                    <h1 class="text-lg font-bold tracking-tight">
+                        Gestão de Animais da ONG
+                    </h1>
+                </div>
+            </a>
+
+            <nav aria-label="Navegação principal">
+                <ul class="flex flex-wrap items-center gap-2 text-sm">
+
+                    <li>
+                        <a href="{% url 'inicio' %}"
+                           class="nav-link">
+                            Início
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'animais' %}"
+                           class="nav-link">
+                            Animais
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'cuidados' %}"
+                           class="nav-link">
+                            Cuidados
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'adocoes' %}"
+                           class="nav-link">
+                            Adoções
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto
+                 px-4 sm:px-6 lg:px-8 py-6">
+
+        {% block content %}{% endblock %}
+
+    </main>
+
+    <footer class="py-4 text-center text-xs text-slate-500
+                   border-t border-slate-200 bg-white">
+        <p>
+            Vira Lata Vira Vida — Sistema de Gestão de Animais
+            © 2026. Todos os direitos reservados.
+        </p>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>
