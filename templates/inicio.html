@@ -1,0 +1,210 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Início | Vira Lata Vira Vida{% endblock %}
+
+{% block extra_head %}
+<style>
+    .dashboard-focus:focus-visible {
+        outline: 3px solid #2d6a4f;
+        outline-offset: 3px;
+    }
+
+    .dashboard-card {
+        transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+
+    <!-- Boas-vindas -->
+    <section class="overflow-hidden rounded-2xl bg-[#1b4332] text-white shadow-sm">
+        <div class="flex flex-col gap-6 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
+            <div class="max-w-2xl">
+                <p class="text-sm font-semibold uppercase tracking-wider text-green-200">
+                    Sistema de gestão de animais
+                </p>
+
+                <h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+                    Cuidar melhor começa com organização. 🐾
+                </h1>
+
+                <p class="mt-3 max-w-xl text-sm leading-6 text-green-50 sm:text-base">
+                    Bem-vindo(a) ao sistema da ONG Vira Lata Vira Vida.
+                    Consulte os animais, acompanhe os cuidados e mantenha
+                    as informações importantes em um só lugar.
+                </p>
+            </div>
+
+            <a href="{% url 'cadastro_animal' %}"
+               class="dashboard-focus inline-flex min-h-[48px] shrink-0 items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 font-semibold text-[#1b4332] hover:bg-green-50">
+                <span aria-hidden="true" class="text-xl">+</span>
+                Cadastrar animal
+            </a>
+        </div>
+    </section>
+
+    <!-- Indicadores -->
+    <section aria-labelledby="titulo-resumo" class="space-y-4">
+        <div>
+            <h2 id="titulo-resumo" class="text-xl font-bold text-slate-900">
+                Resumo dos animais
+            </h2>
+            <p class="mt-1 text-sm text-slate-600">
+                Uma visão geral dos registros da ONG.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+            <article class="dashboard-card rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="flex items-center justify-between gap-3">
+                    <span class="text-sm font-medium text-slate-600">
+                        Animais cadastrados
+                    </span>
+                    <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-green-100 text-2xl"
+                          aria-hidden="true">🐾</span>
+                </div>
+                <p id="total-animais" class="mt-4 text-3xl font-bold text-slate-900">—</p>
+                <p class="mt-1 text-xs text-slate-500">Total de registros</p>
+            </article>
+
+            <article class="dashboard-card rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="flex items-center justify-between gap-3">
+                    <span class="text-sm font-medium text-slate-600">
+                        Disponíveis para adoção
+                    </span>
+                    <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 text-2xl"
+                          aria-hidden="true">💚</span>
+                </div>
+                <p id="total-disponiveis" class="mt-4 text-3xl font-bold text-slate-900">—</p>
+                <p class="mt-1 text-xs text-slate-500">Aguardando um lar</p>
+            </article>
+
+            <article class="dashboard-card rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="flex items-center justify-between gap-3">
+                    <span class="text-sm font-medium text-slate-600">
+                        Em processo de adoção
+                    </span>
+                    <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-100 text-2xl"
+                          aria-hidden="true">🏡</span>
+                </div>
+                <p id="total-processos" class="mt-4 text-3xl font-bold text-slate-900">—</p>
+                <p class="mt-1 text-xs text-slate-500">Adoções em andamento</p>
+            </article>
+
+            <article class="dashboard-card rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="flex items-center justify-between gap-3">
+                    <span class="text-sm font-medium text-slate-600">
+                        Cuidados pendentes
+                    </span>
+                    <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-100 text-2xl"
+                          aria-hidden="true">🩺</span>
+                </div>
+                <p id="total-cuidados" class="mt-4 text-3xl font-bold text-slate-900">—</p>
+                <p class="mt-1 text-xs text-slate-500">Precisam de acompanhamento</p>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Acessos rápidos -->
+    <section aria-labelledby="titulo-acessos" class="space-y-4">
+        <div>
+            <h2 id="titulo-acessos" class="text-xl font-bold text-slate-900">
+                Acesso rápido
+            </h2>
+            <p class="mt-1 text-sm text-slate-600">
+                Vá direto à funcionalidade que precisa.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+
+            <a href="{% url 'animais' %}"
+               class="dashboard-card dashboard-focus rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-2xl"
+                      aria-hidden="true">🔎</span>
+                <h3 class="mt-4 font-bold text-slate-900">Gestão de animais</h3>
+                <p class="mt-2 text-sm leading-5 text-slate-600">
+                    Pesquise registros, consulte identificações e acompanhe a situação de cada animal.
+                </p>
+                <span class="mt-4 inline-block text-sm font-semibold text-green-800">
+                    Consultar animais →
+                </span>
+            </a>
+
+            <a href="{% url 'cuidados' %}"
+               class="dashboard-card dashboard-focus rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-2xl"
+                      aria-hidden="true">🩺</span>
+                <h3 class="mt-4 font-bold text-slate-900">Cuidados e tratamentos</h3>
+                <p class="mt-2 text-sm leading-5 text-slate-600">
+                    Acompanhe vacinações, castrações, tratamentos e o histórico de saúde.
+                </p>
+                <span class="mt-4 inline-block text-sm font-semibold text-green-800">
+                    Acessar cuidados →
+                </span>
+            </a>
+
+            <a href="{% url 'adocoes' %}"
+               class="dashboard-card dashboard-focus rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-2xl"
+                      aria-hidden="true">🏡</span>
+                <h3 class="mt-4 font-bold text-slate-900">Adoções</h3>
+                <p class="mt-2 text-sm leading-5 text-slate-600">
+                    Consulte a situação de adoção dos animais e acompanhe os processos em andamento.
+                </p>
+                <span class="mt-4 inline-block text-sm font-semibold text-green-800">
+                    Acessar adoções →
+                </span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Cuidados e lembretes -->
+    <section aria-labelledby="titulo-pendencias"
+             class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h2 id="titulo-pendencias" class="text-xl font-bold text-slate-900">
+                    Atenção aos cuidados
+                </h2>
+                <p class="mt-1 text-sm text-slate-600">
+                    Exemplos de informações que poderão aparecer nesta área.
+                </p>
+            </div>
+
+            <a href="{% url 'cuidados' %}"
+               class="dashboard-focus text-sm font-semibold text-green-800 hover:underline">
+                Ver cuidados →
+            </a>
+        </div>
+
+        <div id="lista-pendencias" class="mt-5 space-y-3">
+            <p class="text-sm text-slate-500">
+                Carregando informações demonstrativas...
+            </p>
+        </div>
+
+        <p class="mt-4 text-xs text-slate-500">
+            Os dados exibidos nesta versão são fictícios e servem apenas para demonstrar a interface.
+        </p>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/inicio.js' %}"></script>
+{% endblock %}
