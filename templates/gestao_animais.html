@@ -1,0 +1,314 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Gestão de Animais | Vira Lata {% endblock %}
+
+{% block extra_head %}
+<style>
+    .accessible-focus:focus-visible {
+        outline: 3px solid #2d6a4f;
+        outline-offset: 3px;
+        box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.2);
+    }
+
+    #modal-detalhes {
+        overscroll-behavior: contain;
+    }
+
+    #modal-detalhes[aria-hidden="true"] {
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="space-y-6">
+
+    <section aria-labelledby="titulo-consulta"
+             class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 sm:p-6 space-y-5">
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <div>
+                <h2 id="titulo-consulta"
+                    class="text-2xl font-bold text-slate-900 tracking-tight">
+                    Consulta e Acompanhamento de Animais
+                </h2>
+
+                <p class="text-sm text-slate-600 mt-2">
+                    Localize animais cadastrados, consulte a situação de adoção
+                    e verifique alertas e históricos de cuidados.
+                </p>
+            </div>
+
+            <a href="{% url 'cadastro_animal' %}"
+               class="min-h-[44px] px-4 py-3 bg-[#1b4332] hover:bg-[#2d6a4f]
+                      text-white font-semibold rounded-lg accessible-focus
+                      flex items-center justify-center text-sm whitespace-nowrap">
+                + Cadastrar animal
+            </a>
+        </div>
+
+        <form id="search-form"
+              class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end"
+              role="search"
+              aria-label="Pesquisar animais cadastrados">
+
+            <div class="md:col-span-5">
+                <label for="busca-termo"
+                       class="block text-sm font-semibold text-slate-700 mb-1">
+                    Nome ou identificação
+                </label>
+
+                <input type="text"
+                       id="busca-termo"
+                       name="termo"
+                       placeholder="Digite o nome ou microchip..."
+                       aria-describedby="busca-dica"
+                       class="w-full px-3.5 py-3 bg-white border border-slate-300
+                              rounded-lg text-slate-900 text-sm accessible-focus">
+
+                <span id="busca-dica" class="sr-only">
+                    Digite parte do nome ou o número do microchip.
+                </span>
+            </div>
+
+            <div class="md:col-span-3">
+                <label for="filtro-situacao"
+                       class="block text-sm font-semibold text-slate-700 mb-1">
+                    Situação de adoção
+                </label>
+
+                <select id="filtro-situacao"
+                        name="situacao"
+                        class="w-full px-3.5 py-3 bg-white border border-slate-300
+                               rounded-lg text-slate-900 text-sm accessible-focus">
+                    <option value="TODOS">Todas as situações</option>
+                    <option value="Disponível">Disponível</option>
+                    <option value="Em processo de adoção">Em processo de adoção</option>
+                    <option value="Adotado">Adotado</option>
+                </select>
+            </div>
+
+            <div class="md:col-span-4 flex flex-wrap gap-2">
+                <button type="submit"
+                        class="flex-1 min-h-[44px] px-4 py-3 bg-[#1b4332]
+                               hover:bg-[#2d6a4f] text-white font-semibold
+                               rounded-lg accessible-focus text-sm">
+                    Pesquisar
+                </button>
+
+                <button type="button"
+                        id="btn-limpar"
+                        class="min-h-[44px] px-4 py-3 bg-slate-100
+                               hover:bg-slate-200 text-slate-700 font-semibold
+                               rounded-lg border border-slate-300 accessible-focus text-sm">
+                    Limpar
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <div id="sr-announcer"
+         class="sr-only"
+         aria-live="polite"
+         aria-atomic="true"></div>
+
+    <div id="global-alert-box"
+         class="hidden p-4 rounded-lg border-l-4"
+         role="status"
+         aria-live="polite">
+        <div class="flex items-center justify-between gap-3">
+            <p id="global-alert-msg" class="text-sm font-semibold"></p>
+
+            <button type="button"
+                    id="btn-fechar-alerta"
+                    class="min-w-[44px] min-h-[44px] text-slate-600
+                           hover:text-slate-900 rounded-lg accessible-focus"
+                    aria-label="Fechar notificação">
+                ✕
+            </button>
+        </div>
+    </div>
+
+    <section aria-labelledby="sec-resultados-header" class="space-y-4">
+
+        <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <h3 id="sec-resultados-header"
+                    class="text-lg font-bold text-slate-900">
+                    Animais cadastrados
+                </h3>
+
+                <span id="contador-registros"
+                      class="inline-flex items-center justify-center px-2.5 py-1
+                             rounded-full text-xs font-bold bg-emerald-100 text-[#1b4332]">
+                    0 animais
+                </span>
+            </div>
+
+            <span class="text-xs text-slate-500">
+                Dados demonstrativos
+            </span>
+        </div>
+
+        <div id="grid-resultados"
+             class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        </div>
+
+        <div id="estado-vazio"
+             class="hidden bg-white rounded-xl border-2 border-dashed
+                    border-slate-300 p-8 text-center space-y-4">
+
+            <div class="text-4xl" aria-hidden="true">🐾</div>
+
+            <h4 class="text-lg font-bold text-slate-900">
+                Nenhum animal encontrado
+            </h4>
+
+            <p class="text-sm text-slate-600 max-w-md mx-auto">
+                Não encontramos animais com os filtros informados.
+                Tente outro nome ou limpe a pesquisa.
+            </p>
+
+            <button type="button"
+                    id="btn-restaurar"
+                    class="min-h-[44px] px-5 py-3 bg-[#2d6a4f]
+                           hover:bg-[#1b4332] text-white font-semibold
+                           rounded-lg accessible-focus text-sm">
+                Restaurar lista completa
+            </button>
+        </div>
+    </section>
+
+</div>
+
+<div id="modal-detalhes"
+     class="hidden fixed inset-0 z-50 bg-slate-900/60
+            flex items-center justify-center p-3 sm:p-4 overflow-y-auto"
+     role="dialog"
+     aria-modal="true"
+     aria-hidden="true"
+     aria-labelledby="modal-titulo"
+     tabindex="-1">
+
+    <div class="bg-white rounded-xl shadow-2xl border border-slate-200
+                w-full max-w-2xl max-h-[90vh] flex flex-col my-auto overflow-hidden">
+
+        <div class="bg-[#1b4332] text-white px-5 py-4
+                    flex items-center justify-between gap-3">
+            <div>
+                <span id="modal-badge-status"
+                      class="inline-block px-2.5 py-1 rounded-full text-xs
+                             font-bold bg-white text-[#1b4332] mb-2">
+                </span>
+
+                <h3 id="modal-titulo" class="text-xl font-bold">
+                    Detalhes do animal
+                </h3>
+            </div>
+
+            <button type="button"
+                    id="btn-fechar-modal"
+                    class="min-h-[44px] min-w-[44px] rounded-lg
+                           hover:bg-white/10 accessible-focus"
+                    aria-label="Fechar detalhes">
+                ✕
+            </button>
+        </div>
+
+        <div class="p-5 sm:p-6 overflow-y-auto space-y-6 flex-grow text-sm">
+
+            <div class="bg-slate-50 rounded-lg p-4 border border-slate-200
+                        grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                <div>
+                    <span class="block text-xs font-semibold text-slate-500 uppercase">
+                        Nome
+                    </span>
+                    <span id="modal-nome" class="font-bold text-base text-slate-900"></span>
+                </div>
+
+                <div>
+                    <span class="block text-xs font-semibold text-slate-500 uppercase">
+                        Sexo
+                    </span>
+                    <span id="modal-sexo" class="font-medium text-slate-800"></span>
+                </div>
+
+                <div>
+                    <span class="block text-xs font-semibold text-slate-500 uppercase">
+                        Data de entrada
+                    </span>
+                    <span id="modal-entrada" class="font-medium text-slate-800"></span>
+                </div>
+
+                <div>
+                    <span class="block text-xs font-semibold text-slate-500 uppercase">
+                        Microchip / identificação
+                    </span>
+                    <span id="modal-microchip" class="font-medium text-slate-800"></span>
+                </div>
+            </div>
+
+            <div id="modal-alerta-container"
+                 class="hidden p-4 rounded-lg border-l-4"
+                 role="status">
+                <p id="modal-alerta-texto" class="font-semibold text-sm"></p>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="font-bold text-slate-900 text-base border-b
+                           border-slate-200 pb-2">
+                    Histórico de saúde e cuidados
+                </h4>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse"
+                           aria-label="Histórico de saúde e cuidados do animal">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200
+                                       text-xs font-bold text-slate-700">
+                                <th scope="col" class="p-2.5">Data</th>
+                                <th scope="col" class="p-2.5">Procedimento</th>
+                                <th scope="col" class="p-2.5">Status</th>
+                                <th scope="col" class="p-2.5">Responsável</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="modal-tabela-historico"
+                               class="divide-y divide-slate-200 text-xs">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-50 border-t border-slate-200 px-5 py-4
+                    flex flex-col sm:flex-row justify-between gap-3">
+
+            <button type="button"
+                    id="btn-fechar-modal-rodape"
+                    class="min-h-[44px] px-5 py-3 bg-slate-200
+                           hover:bg-slate-300 text-slate-800 font-semibold
+                           rounded-lg accessible-focus">
+                Fechar
+            </button>
+
+            <button type="button"
+                    id="btn-modal-editar"
+                    class="min-h-[44px] px-5 py-3 bg-[#1b4332]
+                           hover:bg-[#2d6a4f] text-white font-semibold
+                           rounded-lg accessible-focus">
+                Editar registro
+            </button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/gestao_animais.js' %}"></script>
+{% endblock %}
