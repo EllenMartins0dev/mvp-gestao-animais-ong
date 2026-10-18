@@ -1,0 +1,63 @@
+
+:root {
+    --ong-dark: #1b4332;
+    --ong-green: #2d6a4f;
+    --ong-light: #d8f3dc;
+    --ong-bg: #f8f9fa;
+    --ong-border: #e9ecef;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--ong-bg);
+    color: #1e293b;
+}
+
+.accessible-focus:focus-visible {
+    outline: 3px solid var(--ong-dark);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.25);
+}
+
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    color: white;
+    transition: background-color 150ms ease;
+}
+
+.nav-link:hover {
+    background-color: var(--ong-green);
+}
+
+.nav-link:focus-visible {
+    outline: 3px solid var(--ong-light);
+    outline-offset: 2px;
+}
+
+::selection {
+    background-color: var(--ong-light);
+    color: var(--ong-dark);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
