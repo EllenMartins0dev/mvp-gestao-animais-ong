@@ -20,7 +20,6 @@ Desenvolver uma aplicação web que permita organizar e consultar os dados dos a
 - Banco de dados relacional
 - Git e GitHub para versionamento
 - Testes automatizados
-- GitHub Actions para Integração Contínua
 
 
 ## Escopo do MVP
