@@ -1,4 +1,3 @@
-
 /*
  * Dashboard inicial — Vira Lata Vira Vida
  *
@@ -46,6 +45,10 @@ const cuidadosDemonstrativos = [
     }
 ];
 
+/* ================================
+   DASHBOARD
+================================ */
+
 function atualizarIndicadores() {
     const totalAnimais = animaisDemonstrativos.length;
 
@@ -87,6 +90,7 @@ function criarItemCuidado(cuidado) {
     informacoes.append(nomeAnimal, procedimento);
 
     const situacao = document.createElement("span");
+
     situacao.className =
         cuidado.status === "Pendente"
             ? "inline-flex w-fit rounded-full bg-amber-100 px-3 py-1 " +
@@ -104,13 +108,19 @@ function criarItemCuidado(cuidado) {
 function renderizarCuidados() {
     const lista = document.getElementById("lista-pendencias");
 
+    // Evita erros em páginas que não possuem a lista do dashboard.
+    if (!lista) {
+        return;
+    }
+
     lista.replaceChildren();
 
     if (cuidadosDemonstrativos.length === 0) {
         const mensagem = document.createElement("p");
 
         mensagem.className = "text-sm text-slate-600";
-        mensagem.textContent = "Não há cuidados demonstrativos para exibir.";
+        mensagem.textContent =
+            "Não há cuidados demonstrativos para exibir.";
 
         lista.appendChild(mensagem);
         return;
@@ -122,8 +132,21 @@ function renderizarCuidados() {
 }
 
 function inicializarDashboard() {
-    atualizarIndicadores();
-    renderizarCuidados();
-}
+    const totalAnimais = document.getElementById("total-animais");
+    const totalDisponiveis = document.getElementById("total-disponiveis");
+    const totalProcessos = document.getElementById("total-processos");
+    const totalCuidados = document.getElementById("total-cuidados");
+    const listaPendencias = document.getElementById("lista-pendencias");
 
-inicializarDashboard();
+    // Só inicializa o dashboard se seus elementos estiverem presentes.
+    if (
+        totalAnimais &&
+        totalDisponiveis &&
+        totalProcessos &&
+        totalCuidados &&
+        listaPendencias
+    ) {
+        atualizarIndicadores();
+        renderizarCuidados();
+    }
+}

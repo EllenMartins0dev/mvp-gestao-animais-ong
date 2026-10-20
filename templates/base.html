@@ -12,8 +12,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-          rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -26,6 +29,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5
                     flex flex-wrap items-center justify-between gap-3">
 
+            <!-- Identidade visual -->
             <a href="{% url 'inicio' %}"
                class="flex items-center gap-3 accessible-focus rounded-lg"
                aria-label="Vira Lata Vira Vida - Página inicial">
@@ -36,66 +40,124 @@
 
                 <div>
                     <p class="text-xs text-[#d8f3dc]">
-                        Vira Lata Vira Vida
+                        Vira Lata
                     </p>
+
                     <h1 class="text-lg font-bold tracking-tight">
                         Gestão de Animais da ONG
                     </h1>
                 </div>
             </a>
 
+            <!-- Navegação principal -->
             <nav aria-label="Navegação principal">
                 <ul class="flex flex-wrap items-center gap-2 text-sm">
 
                     <li>
-                        <a href="{% url 'inicio' %}"
-                           class="nav-link">
+                        <a href="{% url 'inicio' %}" class="nav-link">
                             Início
                         </a>
                     </li>
 
                     <li>
-                        <a href="{% url 'animais' %}"
-                           class="nav-link">
+                        <a href="{% url 'animais' %}" class="nav-link">
                             Animais
                         </a>
                     </li>
 
                     <li>
-                        <a href="{% url 'cuidados' %}"
-                           class="nav-link">
+                        <a href="{% url 'cuidados' %}" class="nav-link">
                             Cuidados
                         </a>
                     </li>
 
                     <li>
-                        <a href="{% url 'adocoes' %}"
-                           class="nav-link">
+                        <a href="{% url 'adocoes' %}" class="nav-link">
                             Adoções
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'doacoes_voluntarios' %}"
+                           class="nav-link">
+                            Doações e Voluntariado
                         </a>
                     </li>
 
                 </ul>
             </nav>
+
+            <!-- Controles de acessibilidade -->
+            <div class="flex flex-wrap items-center gap-2"
+                 role="group"
+                 aria-label="Controles de tamanho do texto">
+
+                <span class="text-sm text-white">
+                    Acessibilidade:
+                </span>
+
+                <button
+                    type="button"
+                    id="diminuir-fonte"
+                    class="accessibility-button"
+                    aria-label="Diminuir tamanho do texto"
+                    title="Diminuir fonte"
+                >
+                    A−
+                </button>
+
+                <button
+                    type="button"
+                    id="aumentar-fonte"
+                    class="accessibility-button"
+                    aria-label="Aumentar tamanho do texto"
+                    title="Aumentar fonte"
+                >
+                    A+
+                </button>
+
+                <button
+                    type="button"
+                    id="restaurar-fonte"
+                    class="accessibility-button"
+                    aria-label="Restaurar tamanho original do texto"
+                    title="Restaurar fonte"
+                >
+                    A
+                </button>
+
+            </div>
+
+            <span
+                id="anuncio-fonte"
+                class="sr-only"
+                aria-live="polite"
+            ></span>
+
         </div>
     </header>
 
-    <main class="flex-grow max-w-7xl w-full mx-auto
-                 px-4 sm:px-6 lg:px-8 py-6">
-
+    <!-- Conteúdo de cada página -->
+    <main
+        id="conteudo-principal"
+        class="flex-grow max-w-7xl w-full mx-auto
+               px-4 sm:px-6 lg:px-8 py-6"
+    >
         {% block content %}{% endblock %}
-
     </main>
 
+    <!-- Rodapé -->
     <footer class="py-4 text-center text-xs text-slate-500
                    border-t border-slate-200 bg-white">
         <p>
-            Vira Lata Vira Vida — Sistema de Gestão de Animais
+            Vira Lata — Sistema de Gestão de Animais
             © 2026. Todos os direitos reservados.
         </p>
     </footer>
 
+    <!-- JavaScript de acessibilidade -->
     <script src="{% static 'js/script.js' %}"></script>
+
     {% block extra_js %}{% endblock %}
 
 </body>
