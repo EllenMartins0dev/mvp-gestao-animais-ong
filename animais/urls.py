@@ -21,4 +21,5 @@ urlpatterns = [
     path("animais/cadastrar/", views.cadastro_animal, name="cadastro_animal"),
     path("cuidados/", views.cuidados, name="cuidados"),
     path("adocoes/", views.adocoes, name="adocoes"),
+    path("doacoes-voluntarios/",views.doacoes_voluntarios,name="doacoes_voluntarios"),
 ]

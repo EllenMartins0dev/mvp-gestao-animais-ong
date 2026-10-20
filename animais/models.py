@@ -92,3 +92,55 @@ class Adocao(models.Model):
 
     def __str__(self):
         return f"{self.animal.nome} - {self.nome_adotante}"
+
+        
+class Doacao(models.Model):
+    TIPOS = [
+        ("Financeira", "Financeira"),
+        ("Alimentos", "Alimentos"),
+        ("Medicamentos", "Medicamentos"),
+        ("Materiais", "Materiais"),
+        ("Outros", "Outros"),
+    ]
+
+    nome_doador = models.CharField(max_length=150)
+    tipo = models.CharField(max_length=20, choices=TIPOS)
+    descricao = models.CharField(max_length=200)
+    valor = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+    quantidade = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+    )
+    data_doacao = models.DateField()
+    observacoes = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.nome_doador} - {self.tipo}"
+
+
+class Voluntario(models.Model):
+    DISPONIBILIDADES = [
+        ("Manhã", "Manhã"),
+        ("Tarde", "Tarde"),
+        ("Noite", "Noite"),
+        ("Flexível", "Flexível"),
+    ]
+
+    nome = models.CharField(max_length=150)
+    telefone = models.CharField(max_length=30)
+    email = models.EmailField()
+    disponibilidade = models.CharField(
+        max_length=20,
+        choices=DISPONIBILIDADES,
+    )
+    habilidades = models.TextField(blank=True)
+    data_cadastro = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nome
+

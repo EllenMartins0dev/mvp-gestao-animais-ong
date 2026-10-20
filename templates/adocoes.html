@@ -1,0 +1,355 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Adoções | Vira Lata Vira Vida{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/adocoes.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+
+    <!-- Cabeçalho -->
+    <section>
+        <p class="text-sm font-semibold uppercase tracking-wide text-[#2d6a4f]">
+            Um novo começo
+        </p>
+
+        <h2 class="mt-2 text-3xl font-bold text-[#1b4332]">
+            Gestão de Adoções
+        </h2>
+
+        <p class="mt-2 leading-relaxed text-slate-600">
+            Registre interessados, acompanhe as solicitações e mantenha
+            atualizado o processo de adoção dos animais da ONG.
+        </p>
+    </section>
+
+    <!-- Mensagens do Django -->
+    {% if messages %}
+        <div class="space-y-3" aria-live="polite">
+            {% for message in messages %}
+                <div class="rounded-xl border border-[#b7e4c7] bg-[#d8f3dc] p-4 text-[#1b4332]"
+                     role="status">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Formulário de adoção -->
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+
+        <div class="mb-7">
+            <div class="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-[#d8f3dc] text-2xl"
+                 aria-hidden="true">
+                🐾
+            </div>
+
+            <h3 class="text-xl font-bold text-[#1b4332]">
+                Registrar solicitação de adoção
+            </h3>
+
+            <p class="mt-1 text-sm leading-relaxed text-slate-500">
+                Preencha os dados do animal e da pessoa interessada.
+            </p>
+        </div>
+
+        <form method="post" class="formulario-adocao space-y-6">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+                <!-- Animal -->
+                <div>
+                    <label for="animal"
+                           class="mb-2 block text-sm font-semibold text-slate-700">
+                        Animal *
+                    </label>
+
+                    <select id="animal" name="animal" required>
+                        <option value="" selected disabled>
+                            Selecione um animal
+                        </option>
+
+                        {% for animal in animais %}
+                            {% if animal.situacao != "Adotado" %}
+                                <option value="{{ animal.pk }}">
+                                    {{ animal.nome }} — {{ animal.get_situacao_display }}
+                                </option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+
+                    <p class="mt-2 text-xs text-slate-500">
+                        São exibidos animais que ainda não foram adotados.
+                    </p>
+                </div>
+
+                <!-- Nome do adotante -->
+                <div>
+                    <label for="nome_adotante"
+                           class="mb-2 block text-sm font-semibold text-slate-700">
+                        Nome do interessado *
+                    </label>
+
+                    <input type="text"
+                           id="nome_adotante"
+                           name="nome_adotante"
+                           maxlength="150"
+                           autocomplete="name"
+                           required
+                           placeholder="Digite o nome completo">
+                </div>
+
+                <!-- Telefone -->
+                <div>
+                    <label for="telefone"
+                           class="mb-2 block text-sm font-semibold text-slate-700">
+                        Telefone *
+                    </label>
+
+                    <input type="tel"
+                           id="telefone"
+                           name="telefone"
+                           maxlength="30"
+                           autocomplete="tel"
+                           required
+                           placeholder="(19) 99999-9999">
+                </div>
+
+                <!-- E-mail -->
+                <div>
+                    <label for="email"
+                           class="mb-2 block text-sm font-semibold text-slate-700">
+                        E-mail
+                    </label>
+
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           maxlength="254"
+                           autocomplete="email"
+                           placeholder="exemplo@email.com">
+                </div>
+
+                <!-- Status -->
+                <div class="md:col-span-2">
+                    <label for="status"
+                           class="mb-2 block text-sm font-semibold text-slate-700">
+                        Status da solicitação *
+                    </label>
+
+                    <select id="status" name="status" required>
+                        <option value="Em análise" selected>Em análise</option>
+                        <option value="Aprovada">Aprovada</option>
+                        <option value="Concluída">Concluída</option>
+                        <option value="Cancelada">Cancelada</option>
+                    </select>
+
+                    <p class="mt-2 text-xs text-slate-500">
+                        Atualize o status conforme o andamento do processo.
+                    </p>
+                </div>
+
+                <!-- Observações -->
+                <div class="md:col-span-2">
+                    <label for="observacoes"
+                           class="mb-2 block text-sm font-semibold text-slate-700">
+                        Observações
+                    </label>
+
+                    <textarea id="observacoes"
+                              name="observacoes"
+                              rows="4"
+                              placeholder="Anotações sobre a solicitação e o acompanhamento..."></textarea>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-500">
+                * Campos obrigatórios.
+            </p>
+
+            <!-- Botões -->
+            <div class="flex flex-col gap-3 border-t border-slate-100 pt-5 sm:flex-row">
+
+                <button type="submit"
+                        class="foco-ong inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#1b4332] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#2d6a4f]">
+                    <span aria-hidden="true">✓</span>
+                    Registrar adoção
+                </button>
+
+                <button type="reset"
+                        class="foco-ong inline-flex min-h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition-colors hover:bg-slate-50">
+                    Limpar formulário
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Histórico de adoções -->
+    <section>
+        <div class="mb-5">
+            <p class="text-sm font-semibold uppercase tracking-wide text-[#2d6a4f]">
+                Acompanhamento
+            </p>
+
+            <h3 class="mt-2 text-xl font-bold text-[#1b4332]">
+                Histórico de adoções
+            </h3>
+
+            <p class="mt-1 text-sm text-slate-600">
+                Acompanhe as solicitações registradas no sistema.
+            </p>
+        </div>
+
+        {% if adocoes_registradas %}
+            <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+                {% for adocao in adocoes_registradas %}
+                    <article class="cartao-adocao rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+
+                        <!-- Animal e interessado -->
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <h4 class="break-words text-lg font-bold text-[#1b4332]">
+                                    {{ adocao.animal.nome }}
+                                </h4>
+
+                                <p class="mt-1 text-sm text-slate-600">
+                                    Interessado:
+                                    <span class="font-medium text-slate-800">
+                                        {{ adocao.nome_adotante }}
+                                    </span>
+                                </p>
+                            </div>
+
+                            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#d8f3dc] text-xl"
+                                  aria-hidden="true">
+                                🐾
+                            </span>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="mt-4">
+                            {% if adocao.status == "Concluída" %}
+                                <span class="inline-flex items-center gap-2 rounded-full bg-[#d8f3dc] px-3 py-1.5 text-xs font-semibold text-[#1b4332]">
+                                    <span class="h-2 w-2 rounded-full bg-[#2d6a4f]"
+                                          aria-hidden="true"></span>
+                                    {{ adocao.get_status_display }}
+                                </span>
+                            {% elif adocao.status == "Cancelada" %}
+                                <span class="inline-flex items-center gap-2 rounded-full bg-red-100 px-3 py-1.5 text-xs font-semibold text-red-800">
+                                    <span class="h-2 w-2 rounded-full bg-red-600"
+                                          aria-hidden="true"></span>
+                                    {{ adocao.get_status_display }}
+                                </span>
+                            {% elif adocao.status == "Aprovada" %}
+                                <span class="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1.5 text-xs font-semibold text-blue-800">
+                                    <span class="h-2 w-2 rounded-full bg-blue-600"
+                                          aria-hidden="true"></span>
+                                    {{ adocao.get_status_display }}
+                                </span>
+                            {% else %}
+                                <span class="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-800">
+                                    <span class="h-2 w-2 rounded-full bg-amber-500"
+                                          aria-hidden="true"></span>
+                                    {{ adocao.get_status_display }}
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Informações -->
+                        <div class="mt-5 space-y-3 border-t border-slate-100 pt-4 text-sm">
+
+                            <div class="flex items-start gap-3">
+                                <span class="mt-0.5 text-base" aria-hidden="true">📞</span>
+                                <div class="min-w-0">
+                                    <p class="text-xs font-medium text-slate-500">
+                                        Telefone
+                                    </p>
+                                    <p class="break-words text-slate-700">
+                                        {{ adocao.telefone }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {% if adocao.email %}
+                                <div class="flex items-start gap-3">
+                                    <span class="mt-0.5 text-base" aria-hidden="true">✉️</span>
+                                    <div class="min-w-0">
+                                        <p class="text-xs font-medium text-slate-500">
+                                            E-mail
+                                        </p>
+                                        <p class="break-words text-slate-700">
+                                            {{ adocao.email }}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <div class="flex items-start gap-3">
+                                <span class="mt-0.5 text-base" aria-hidden="true">📅</span>
+                                <div>
+                                    <p class="text-xs font-medium text-slate-500">
+                                        Data da solicitação
+                                    </p>
+                                    <p class="text-slate-700">
+                                        {{ adocao.data_solicitacao|date:"d/m/Y" }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {% if adocao.data_conclusao %}
+                                <div class="flex items-start gap-3">
+                                    <span class="mt-0.5 text-base" aria-hidden="true">✅</span>
+                                    <div>
+                                        <p class="text-xs font-medium text-slate-500">
+                                            Data da conclusão
+                                        </p>
+                                        <p class="text-slate-700">
+                                            {{ adocao.data_conclusao|date:"d/m/Y" }}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if adocao.observacoes %}
+                                <div class="rounded-xl bg-slate-50 p-4">
+                                    <p class="font-semibold text-slate-700">
+                                        Observações
+                                    </p>
+
+                                    <p class="mt-2 whitespace-pre-line break-words leading-relaxed text-slate-600">{{ adocao.observacoes }}</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+
+        {% else %}
+            <!-- Estado vazio -->
+            <div class="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
+                <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#d8f3dc] text-3xl"
+                     aria-hidden="true">
+                    🏡
+                </div>
+
+                <h4 class="mt-4 font-bold text-slate-800">
+                    Nenhuma solicitação registrada
+                </h4>
+
+                <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-600">
+                    As solicitações de adoção cadastradas aparecerão aqui.
+                    Quando alguém demonstrar interesse em um animal, registre
+                    a solicitação pelo formulário acima.
+                </p>
+            </div>
+        {% endif %}
+    </section>
+
+</div>
+{% endblock %}

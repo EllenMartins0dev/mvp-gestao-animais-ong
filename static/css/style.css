@@ -1,3 +1,6 @@
+/* ========================================
+   VARIÁVEIS GLOBAIS
+======================================== */
 
 :root {
     --ong-dark: #1b4332;
@@ -13,11 +16,40 @@ body {
     color: #1e293b;
 }
 
+/* ========================================
+   ACESSIBILIDADE
+======================================== */
+
 .accessible-focus:focus-visible {
     outline: 3px solid var(--ong-dark);
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.25);
+    box-shadow: 0 0 0 4px rgb(45 106 79 / 25%);
 }
+
+::selection {
+    background-color: var(--ong-light);
+    color: var(--ong-dark);
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* ========================================
+   NAVEGAÇÃO
+======================================== */
 
 .nav-link {
     display: inline-flex;
@@ -26,7 +58,7 @@ body {
     padding: 0.65rem 0.85rem;
     border: 1px solid transparent;
     border-radius: 0.5rem;
-    color: white;
+    color: #fff;
     transition: background-color 150ms ease;
 }
 
@@ -39,10 +71,40 @@ body {
     outline-offset: 2px;
 }
 
-::selection {
-    background-color: var(--ong-light);
+/* ========================================
+   BOTÕES DE ACESSIBILIDADE
+======================================== */
+
+.accessibility-button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem;
+    border: 2px solid #fff;
+    border-radius: 0.5rem;
+    background-color: #fff;
     color: var(--ong-dark);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
 }
+
+.accessibility-button:hover {
+    background-color: var(--ong-light);
+}
+
+.accessibility-button:focus-visible {
+    outline: 3px solid var(--ong-light);
+    outline-offset: 3px;
+}
+
+.accessibility-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   BARRA DE ROLAGEM
+======================================== */
 
 ::-webkit-scrollbar {
     width: 8px;
@@ -60,4 +122,808 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #64748b;
+}
+
+/* ========================================
+   FORMULÁRIOS GLOBAIS DA ONG
+======================================== */
+
+.formulario-ong input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
+.formulario-ong select,
+.formulario-ong textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.625rem;
+    color: #1f2937;
+    background-color: #fff;
+    font: inherit;
+}
+
+.formulario-ong input:focus,
+.formulario-ong select:focus,
+.formulario-ong textarea:focus {
+    outline: 3px solid #95d5b2;
+    outline-offset: 2px;
+    border-color: var(--ong-green);
+}
+
+.formulario-ong input[type="date"] {
+    width: 100%;
+    min-height: 3.5rem;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.formulario-ong input[readonly],
+.formulario-ong textarea[readonly] {
+    background-color: #f8fafc;
+    cursor: default;
+}
+
+/* ========================================
+   CAMPOS NUMÉRICOS — SEM SETINHAS
+======================================== */
+
+input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* ========================================
+   CAMPOS DE PAGAMENTO
+======================================== */
+
+.campo-pagamento:not(.visivel) {
+    display: none !important;
+}
+
+.campo-pagamento.visivel {
+    display: block !important;
+}
+
+/* Menu de forma de pagamento */
+
+#metodo_pagamento {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 42px 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #374151;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232d6a4f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#metodo_pagamento:hover {
+    border-color: #86a996;
+}
+
+#metodo_pagamento:focus-visible {
+    outline: 3px solid #95d5b2;
+    outline-offset: 2px;
+    border-color: var(--ong-green);
+    box-shadow: 0 0 0 3px rgb(45 106 79 / 15%);
+}
+
+#metodo_pagamento option {
+    padding: 10px;
+    background-color: #fff;
+    color: #1f2937;
+}
+
+/* ========================================
+   PIX ILUSTRATIVO
+======================================== */
+
+.qr-code-ficticio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 180px;
+    height: 180px;
+    border: 8px dashed var(--ong-green);
+    border-radius: 12px;
+    background: repeating-linear-gradient(
+        45deg,
+        #fff,
+        #fff 8px,
+        var(--ong-light) 8px,
+        var(--ong-light) 16px
+    );
+    color: var(--ong-dark);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+/* QR Code decorativo */
+
+.qr-ilustrativo {
+    position: relative;
+    width: 190px;
+    height: 190px;
+    overflow: hidden;
+    border: 8px solid #fff;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 0 1px var(--ong-light);
+    background-image: repeating-conic-gradient(
+        var(--ong-dark) 0% 25%,
+        #fff 0% 50%
+    );
+    background-size: 20px 20px;
+}
+
+.qr-marca {
+    position: absolute;
+    z-index: 1;
+    width: 42px;
+    height: 42px;
+    border: 7px solid var(--ong-dark);
+    border-radius: 3px;
+    background: #fff;
+}
+
+.qr-marca::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    background: var(--ong-dark);
+}
+
+.qr-canto-1 {
+    top: 3px;
+    left: 3px;
+}
+
+.qr-canto-2 {
+    top: 3px;
+    right: 3px;
+}
+
+.qr-canto-3 {
+    bottom: 3px;
+    left: 3px;
+}
+
+.qr-centro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    padding: 6px 10px;
+    border: 2px solid #fff;
+    border-radius: 6px;
+    background: var(--ong-green);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* ========================================
+   BOLETO ILUSTRATIVO
+======================================== */
+
+.boleto-ilustrativo {
+    padding: 20px;
+    overflow-wrap: anywhere;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgb(0 0 0 / 5%);
+}
+
+.boleto-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 2px dashed #d1d5db;
+}
+
+.boleto-cabecalho h4 {
+    margin-top: 5px;
+    color: var(--ong-dark);
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.boleto-cabecalho p {
+    margin-top: 3px;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.boleto-selo {
+    padding: 5px 8px;
+    border-radius: 5px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.boleto-detalhes {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.boleto-detalhes div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.boleto-detalhes span,
+.boleto-linha span {
+    color: #6b7280;
+    font-size: 11px;
+}
+
+.boleto-detalhes strong {
+    color: #1f2937;
+    font-size: 13px;
+}
+
+.boleto-detalhes .boleto-valor {
+    color: var(--ong-green);
+    font-size: 22px;
+}
+
+.boleto-linha {
+    padding: 16px 0;
+}
+
+.boleto-linha p {
+    margin-top: 7px;
+    color: #374151;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.boleto-codigo-barras {
+    width: 100%;
+    height: 58px;
+    margin: 8px 0 16px;
+    background: repeating-linear-gradient(
+        90deg,
+        #111827 0,
+        #111827 2px,
+        #fff 2px,
+        #fff 4px,
+        #111827 4px,
+        #111827 5px,
+        #fff 5px,
+        #fff 9px,
+        #111827 9px,
+        #111827 12px,
+        #fff 12px,
+        #fff 14px
+    );
+}
+
+.boleto-aviso {
+    padding: 9px;
+    border: 1px solid #fde68a;
+    border-radius: 6px;
+    background: #fffbeb;
+    color: #92400e;
+    font-size: 10px;
+    font-weight: 800;
+    text-align: center;
+}
+
+/* ========================================
+   FORMULÁRIO DE ADOÇÕES
+======================================== */
+
+.formulario-adocao {
+    display: block;
+    width: 100%;
+}
+
+.formulario-adocao .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+}
+
+.formulario-adocao label {
+    display: block;
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.formulario-adocao input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
+.formulario-adocao select,
+.formulario-adocao textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #1f2937;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.formulario-adocao input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
+.formulario-adocao select {
+    min-height: 48px;
+}
+
+.formulario-adocao input::placeholder,
+.formulario-adocao textarea::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+.formulario-adocao input:focus,
+.formulario-adocao select:focus,
+.formulario-adocao textarea:focus {
+    outline: 3px solid #95d5b2;
+    outline-offset: 2px;
+    border-color: var(--ong-green);
+    box-shadow: 0 0 0 2px rgb(45 106 79 / 10%);
+}
+
+/* Menus de seleção de adoções */
+
+.formulario-adocao select {
+    padding-right: 42px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232d6a4f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+}
+
+.formulario-adocao select:hover {
+    border-color: #86a996;
+}
+
+.formulario-adocao select option {
+    background-color: #fff;
+    color: #1f2937;
+}
+
+.formulario-adocao textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* Botões e foco de acessibilidade */
+
+.foco-ong:focus-visible {
+    outline: 3px solid var(--ong-green);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgb(45 106 79 / 15%);
+}
+
+.formulario-adocao button {
+    min-height: 48px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.formulario-adocao button[type="submit"] {
+    background-color: var(--ong-dark);
+    color: #fff;
+}
+
+.formulario-adocao button[type="submit"]:hover {
+    background-color: var(--ong-green);
+}
+
+.formulario-adocao button[type="reset"] {
+    border: 1px solid #cbd5e1;
+    background-color: #fff;
+    color: #334155;
+}
+
+.formulario-adocao button[type="reset"]:hover {
+    background-color: #f8fafc;
+}
+
+.formulario-adocao button:focus-visible {
+    outline: 3px solid var(--ong-green);
+    outline-offset: 3px;
+}
+
+/* Cartões do histórico de adoções */
+
+.cartao-adocao {
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 1.25rem;
+    overflow-wrap: anywhere;
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgb(15 23 42 / 5%);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.cartao-adocao:hover {
+    border-color: #b7d5c2;
+    box-shadow: 0 6px 18px rgb(27 67 50 / 7%);
+    transform: translateY(-2px);
+}
+
+.cartao-adocao p {
+    overflow-wrap: anywhere;
+}
+
+/* ========================================
+   PÁGINA DE CUIDADOS E TRATAMENTOS
+======================================== */
+
+.cartao-cuidados {
+    box-sizing: border-box;
+    min-width: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgb(15 23 42 / 5%);
+    transition: box-shadow 0.2s ease;
+}
+
+.formulario-cuidados {
+    display: block;
+    width: 100%;
+}
+
+/* Campos de texto, datas, seleção e observações */
+
+.formulario-cuidados input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
+.formulario-cuidados select,
+.formulario-cuidados textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #1f2937;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    opacity: 1;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.formulario-cuidados input[type="date"] {
+    cursor: pointer;
+}
+
+/* Menus de seleção */
+
+.formulario-cuidados select {
+    padding-right: 42px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232d6a4f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+}
+
+.formulario-cuidados select:hover,
+.formulario-cuidados input:hover,
+.formulario-cuidados textarea:hover {
+    border-color: #86a996;
+}
+
+.formulario-cuidados select option {
+    background-color: #fff;
+    color: #1f2937;
+}
+
+/* Área de texto */
+
+.formulario-cuidados textarea {
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+/* Texto de exemplo */
+
+.formulario-cuidados input::placeholder,
+.formulario-cuidados textarea::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+/* Rótulos */
+
+.formulario-cuidados label {
+    display: block;
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Foco e acessibilidade */
+
+.formulario-cuidados input:focus,
+.formulario-cuidados select:focus,
+.formulario-cuidados textarea:focus {
+    outline: 3px solid #95d5b2;
+    outline-offset: 2px;
+    border-color: var(--ong-green);
+    box-shadow: 0 0 0 2px rgb(45 106 79 / 10%);
+}
+
+.formulario-cuidados input:focus-visible,
+.formulario-cuidados select:focus-visible,
+.formulario-cuidados textarea:focus-visible,
+.formulario-cuidados button:focus-visible {
+    outline: 3px solid var(--ong-green);
+    outline-offset: 3px;
+}
+
+/* Botões do formulário de cuidados */
+
+.formulario-cuidados button {
+    min-height: 48px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.formulario-cuidados button[type="submit"] {
+    background-color: var(--ong-dark);
+    color: #fff;
+}
+
+.formulario-cuidados button[type="submit"]:hover {
+    background-color: var(--ong-green);
+}
+
+.formulario-cuidados button[type="reset"] {
+    border: 1px solid #cbd5e1;
+    background-color: #fff;
+    color: #334155;
+}
+
+.formulario-cuidados button[type="reset"]:hover {
+    background-color: #f8fafc;
+}
+
+
+/* ========================================
+   CORREÇÃO DOS CAMPOS — CUIDADOS E TRATAMENTOS
+======================================== */
+
+form.formulario-cuidados {
+    display: block;
+    width: 100%;
+}
+
+/* Inputs, menus de seleção e área de observações */
+form.formulario-cuidados input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
+form.formulario-cuidados select,
+form.formulario-cuidados textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-height: 48px;
+
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+    color: #1f2937;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+
+    opacity: 1;
+    box-shadow: none;
+}
+
+/* Menus de seleção */
+form.formulario-cuidados select {
+    padding-right: 42px;
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232d6a4f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+}
+
+form.formulario-cuidados select option {
+    background-color: #ffffff;
+    color: #1f2937;
+}
+
+/* Campos de data */
+form.formulario-cuidados input[type="date"] {
+    min-height: 48px;
+    cursor: pointer;
+}
+
+/* Área de observações */
+form.formulario-cuidados textarea {
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+/* Texto de exemplo */
+form.formulario-cuidados input::placeholder,
+form.formulario-cuidados textarea::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+/* Rótulos */
+form.formulario-cuidados label {
+    display: block;
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Interação e foco */
+form.formulario-cuidados input:hover,
+form.formulario-cuidados select:hover,
+form.formulario-cuidados textarea:hover {
+    border-color: #86a996;
+}
+
+form.formulario-cuidados input:focus,
+form.formulario-cuidados select:focus,
+form.formulario-cuidados textarea:focus {
+    outline: 3px solid #95d5b2;
+    outline-offset: 2px;
+    border-color: #2d6a4f;
+    box-shadow: 0 0 0 2px rgb(45 106 79 / 10%);
+}
+
+/* Botões */
+form.formulario-cuidados button {
+    min-height: 48px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+form.formulario-cuidados button:focus-visible {
+    outline: 3px solid #2d6a4f;
+    outline-offset: 3px;
+}
+
+/* Celulares: evita zoom automático ao focar nos campos */
+@media (max-width: 480px) {
+    form.formulario-cuidados input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
+    form.formulario-cuidados select,
+    form.formulario-cuidados textarea {
+        font-size: 16px;
+    }
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (min-width: 768px) {
+    .formulario-adocao .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .formulario-adocao input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
+    .formulario-adocao select,
+    .formulario-adocao textarea,
+    .formulario-cuidados input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
+    .formulario-cuidados select,
+    .formulario-cuidados textarea {
+        font-size: 16px;
+    }
+
+    .cartao-adocao:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 380px) {
+    .boleto-detalhes {
+        flex-direction: column;
+    }
+
+    .boleto-detalhes .text-right {
+        text-align: left;
+    }
+}
+
+/* ========================================
+   MOVIMENTO REDUZIDO
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .cartao-adocao,
+    .cartao-cuidados,
+    .formulario-adocao input,
+    .formulario-adocao select,
+    .formulario-adocao textarea,
+    .formulario-adocao button,
+    .formulario-cuidados input,
+    .formulario-cuidados select,
+    .formulario-cuidados textarea,
+    .formulario-cuidados button,
+    #metodo_pagamento {
+        transition: none;
+    }
+
+    .cartao-adocao:hover {
+        transform: none;
+    }
 }
