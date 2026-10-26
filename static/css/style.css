@@ -620,11 +620,15 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 100%;
 }
 
-/* Campos de texto, datas, seleção e observações */
+/*
+   Estilos dos campos.
+   O seletor inclui form.formulario-cuidados para
+   aumentar a especificidade em relação a estilos genéricos.
+*/
 
-.formulario-cuidados input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
-.formulario-cuidados select,
-.formulario-cuidados textarea {
+form.formulario-cuidados input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
+form.formulario-cuidados select,
+form.formulario-cuidados textarea {
     display: block;
     box-sizing: border-box;
     width: 100%;
@@ -638,17 +642,15 @@ input[type="number"]::-webkit-outer-spin-button {
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     line-height: 1.5;
+    font-weight: 400;
     opacity: 1;
+    box-shadow: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.formulario-cuidados input[type="date"] {
-    cursor: pointer;
 }
 
 /* Menus de seleção */
 
-.formulario-cuidados select {
+form.formulario-cuidados select {
     padding-right: 42px;
     cursor: pointer;
     appearance: none;
@@ -660,20 +662,21 @@ input[type="number"]::-webkit-outer-spin-button {
     background-size: 18px;
 }
 
-.formulario-cuidados select:hover,
-.formulario-cuidados input:hover,
-.formulario-cuidados textarea:hover {
-    border-color: #86a996;
-}
-
-.formulario-cuidados select option {
+form.formulario-cuidados select option {
     background-color: #fff;
     color: #1f2937;
 }
 
-/* Área de texto */
+/* Campos de data */
 
-.formulario-cuidados textarea {
+form.formulario-cuidados input[type="date"] {
+    min-height: 48px;
+    cursor: pointer;
+}
+
+/* Área de observações */
+
+form.formulario-cuidados textarea {
     min-height: 110px;
     resize: vertical;
     line-height: 1.6;
@@ -681,15 +684,15 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* Texto de exemplo */
 
-.formulario-cuidados input::placeholder,
-.formulario-cuidados textarea::placeholder {
+form.formulario-cuidados input::placeholder,
+form.formulario-cuidados textarea::placeholder {
     color: #9ca3af;
     opacity: 1;
 }
 
 /* Rótulos */
 
-.formulario-cuidados label {
+form.formulario-cuidados label {
     display: block;
     margin-bottom: 8px;
     color: #334155;
@@ -697,21 +700,29 @@ input[type="number"]::-webkit-outer-spin-button {
     font-weight: 600;
 }
 
+/* Hover */
+
+form.formulario-cuidados input:hover,
+form.formulario-cuidados select:hover,
+form.formulario-cuidados textarea:hover {
+    border-color: #86a996;
+}
+
 /* Foco e acessibilidade */
 
-.formulario-cuidados input:focus,
-.formulario-cuidados select:focus,
-.formulario-cuidados textarea:focus {
+form.formulario-cuidados input:focus,
+form.formulario-cuidados select:focus,
+form.formulario-cuidados textarea:focus {
     outline: 3px solid #95d5b2;
     outline-offset: 2px;
     border-color: var(--ong-green);
     box-shadow: 0 0 0 2px rgb(45 106 79 / 10%);
 }
 
-.formulario-cuidados input:focus-visible,
-.formulario-cuidados select:focus-visible,
-.formulario-cuidados textarea:focus-visible,
-.formulario-cuidados button:focus-visible {
+form.formulario-cuidados input:focus-visible,
+form.formulario-cuidados select:focus-visible,
+form.formulario-cuidados textarea:focus-visible,
+form.formulario-cuidados button:focus-visible {
     outline: 3px solid var(--ong-green);
     outline-offset: 3px;
 }
@@ -746,129 +757,6 @@ input[type="number"]::-webkit-outer-spin-button {
     background-color: #f8fafc;
 }
 
-
-/* ========================================
-   CORREÇÃO DOS CAMPOS — CUIDADOS E TRATAMENTOS
-======================================== */
-
-form.formulario-cuidados {
-    display: block;
-    width: 100%;
-}
-
-/* Inputs, menus de seleção e área de observações */
-form.formulario-cuidados input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
-form.formulario-cuidados select,
-form.formulario-cuidados textarea {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 100%;
-    min-height: 48px;
-
-    padding: 12px 14px;
-    border: 1px solid #cbd5e1;
-    border-radius: 10px;
-
-    background-color: #ffffff;
-    color: #1f2937;
-
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-
-    opacity: 1;
-    box-shadow: none;
-}
-
-/* Menus de seleção */
-form.formulario-cuidados select {
-    padding-right: 42px;
-    cursor: pointer;
-
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%232d6a4f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    background-size: 18px;
-}
-
-form.formulario-cuidados select option {
-    background-color: #ffffff;
-    color: #1f2937;
-}
-
-/* Campos de data */
-form.formulario-cuidados input[type="date"] {
-    min-height: 48px;
-    cursor: pointer;
-}
-
-/* Área de observações */
-form.formulario-cuidados textarea {
-    min-height: 110px;
-    resize: vertical;
-    line-height: 1.6;
-}
-
-/* Texto de exemplo */
-form.formulario-cuidados input::placeholder,
-form.formulario-cuidados textarea::placeholder {
-    color: #9ca3af;
-    opacity: 1;
-}
-
-/* Rótulos */
-form.formulario-cuidados label {
-    display: block;
-    margin-bottom: 8px;
-    color: #334155;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-/* Interação e foco */
-form.formulario-cuidados input:hover,
-form.formulario-cuidados select:hover,
-form.formulario-cuidados textarea:hover {
-    border-color: #86a996;
-}
-
-form.formulario-cuidados input:focus,
-form.formulario-cuidados select:focus,
-form.formulario-cuidados textarea:focus {
-    outline: 3px solid #95d5b2;
-    outline-offset: 2px;
-    border-color: #2d6a4f;
-    box-shadow: 0 0 0 2px rgb(45 106 79 / 10%);
-}
-
-/* Botões */
-form.formulario-cuidados button {
-    min-height: 48px;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-form.formulario-cuidados button:focus-visible {
-    outline: 3px solid #2d6a4f;
-    outline-offset: 3px;
-}
-
-/* Celulares: evita zoom automático ao focar nos campos */
-@media (max-width: 480px) {
-    form.formulario-cuidados input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
-    form.formulario-cuidados select,
-    form.formulario-cuidados textarea {
-        font-size: 16px;
-    }
-}
-
-
 /* ========================================
    RESPONSIVIDADE
 ======================================== */
@@ -883,9 +771,9 @@ form.formulario-cuidados button:focus-visible {
     .formulario-adocao input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
     .formulario-adocao select,
     .formulario-adocao textarea,
-    .formulario-cuidados input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
-    .formulario-cuidados select,
-    .formulario-cuidados textarea {
+    form.formulario-cuidados input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="reset"]),
+    form.formulario-cuidados select,
+    form.formulario-cuidados textarea {
         font-size: 16px;
     }
 
@@ -901,6 +789,10 @@ form.formulario-cuidados button:focus-visible {
 
     .boleto-detalhes .text-right {
         text-align: left;
+    }
+
+    .qr-ilustrativo {
+        max-width: 100%;
     }
 }
 
